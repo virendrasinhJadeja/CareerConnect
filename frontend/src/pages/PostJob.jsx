@@ -1,8 +1,9 @@
 import { useState } from "react";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 function PostJob() {
-  const [formData, setFormData] = useState({
+  const [job, setJob] = useState({
     title: "",
     description: "",
     company: "",
@@ -12,110 +13,88 @@ function PostJob() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setJob({
+      ...job,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await API.post("/jobs/create", formData);
+  try {
+    const res = await API.post("/jobs", job);
 
-      toast.success(res.data.message);
+    console.log("SUCCESS:", res.data);
 
-      setFormData({
-        title: "",
-        description: "",
-        company: "",
-        location: "",
-        salary: "",
-        skills: "",
-      });
+    toast.success("Job Posted Successfully");
 
-    } catch (error) {
-      alert(error.response?.data?.message || "Failed to create job");
-    }
-  };
+  } catch (error) {
+    console.log("ERROR:", error);
+    console.log("ERROR RESPONSE:", error.response);
+
+    toast.error(error.response?.data?.message || "Failed to Post Job");
+  }
+};
 
   return (
-    <div className="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
+    <div className="container mt-5">
+      <h2>Post New Job</h2>
 
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Post New Job
-      </h1>
-
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit}>
 
         <input
           type="text"
           name="title"
           placeholder="Job Title"
-          className="w-full border p-3 rounded"
-          value={formData.title}
+          className="form-control mb-3"
           onChange={handleChange}
-          required
         />
 
         <textarea
           name="description"
           placeholder="Job Description"
-          className="w-full border p-3 rounded"
-          rows="4"
-          value={formData.description}
+          className="form-control mb-3"
           onChange={handleChange}
-          required
         />
 
         <input
           type="text"
           name="company"
-          placeholder="Company Name"
-          className="w-full border p-3 rounded"
-          value={formData.company}
+          placeholder="Company"
+          className="form-control mb-3"
           onChange={handleChange}
-          required
         />
 
         <input
           type="text"
           name="location"
           placeholder="Location"
-          className="w-full border p-3 rounded"
-          value={formData.location}
+          className="form-control mb-3"
           onChange={handleChange}
-          required
         />
 
         <input
-          type="text"
+          type="number"
           name="salary"
           placeholder="Salary"
-          className="w-full border p-3 rounded"
-          value={formData.salary}
+          className="form-control mb-3"
           onChange={handleChange}
         />
 
         <input
           type="text"
           name="skills"
-          placeholder="Skills (React, Node.js, MongoDB)"
-          className="w-full border p-3 rounded"
-          value={formData.skills}
+          placeholder="Skills (React, Node, MongoDB)"
+          className="form-control mb-3"
           onChange={handleChange}
         />
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-3 rounded hover:bg-blue-700"
-        >
+        <button className="btn btn-primary">
           Post Job
         </button>
 
       </form>
-
     </div>
   );
 }
