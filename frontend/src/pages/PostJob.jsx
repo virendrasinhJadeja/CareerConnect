@@ -23,7 +23,7 @@ function PostJob() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/jobs", job);
+      const res = await API.post("/jobs/create", job);
 
       toast.success(res.data.message);
 

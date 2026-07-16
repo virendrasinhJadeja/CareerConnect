@@ -61,7 +61,30 @@ const getAllJobs = async (req, res) => {
   }
 };
 
+// Get Recruiter's Jobs
+const getMyJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      recruiter: req.user.id,
+    });
+
+    res.status(200).json({
+      success: true,
+      jobs,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobs,
+  getMyJobs,
 };
