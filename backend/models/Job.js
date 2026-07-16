@@ -23,24 +23,18 @@ const jobSchema = new mongoose.Schema(
     },
 
     salary: {
-      type: String,
-      default: "",
+      type: Number,
+      required: true,
     },
 
     skills: {
       type: String,
-      default: "",
-    },
-
-    recruiterId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
       required: true,
     },
 
-    status: {
-      type: String,
-      default: "active",
+    recruiter: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
   },
   {
@@ -48,7 +42,4 @@ const jobSchema = new mongoose.Schema(
   }
 );
 
-
-const Job = mongoose.model("Job", jobSchema);
-
-module.exports = Job;
+module.exports = mongoose.model("Job", jobSchema);
