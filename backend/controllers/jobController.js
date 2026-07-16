@@ -13,14 +13,15 @@ const createJob = async (req, res) => {
     } = req.body;
 
     const job = await Job.create({
-      title,
-      description,
-      company,
-      location,
-      salary,
-      skills,
-      recruiter: req.user.id,
-    });
+  title,
+  description,
+  company,
+  location,
+  salary,
+  skills,
+  recruiter: req.user.id,
+  status: "active", // ✅ Add this
+});
 
     res.status(201).json({
       success: true,
