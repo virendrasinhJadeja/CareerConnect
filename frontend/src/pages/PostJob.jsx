@@ -19,82 +19,106 @@ function PostJob() {
     });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const res = await API.post("/jobs", job);
+    try {
+      const res = await API.post("/jobs", job);
 
-    console.log("SUCCESS:", res.data);
+      toast.success(res.data.message);
 
-    toast.success("Job Posted Successfully");
+      setJob({
+        title: "",
+        description: "",
+        company: "",
+        location: "",
+        salary: "",
+        skills: "",
+      });
 
-  } catch (error) {
-    console.log("ERROR:", error);
-    console.log("ERROR RESPONSE:", error.response);
-
-    toast.error(error.response?.data?.message || "Failed to Post Job");
-  }
-};
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to create job");
+    }
+  };
 
   return (
-    <div className="container mt-5">
-      <h2>Post New Job</h2>
+    <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
 
-      <form onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-bold mb-6">
+        Post New Job
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-4">
 
         <input
           type="text"
           name="title"
           placeholder="Job Title"
-          className="form-control mb-3"
+          value={job.title}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
         <textarea
           name="description"
           placeholder="Job Description"
-          className="form-control mb-3"
+          value={job.description}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          rows="4"
+          required
         />
 
         <input
           type="text"
           name="company"
-          placeholder="Company"
-          className="form-control mb-3"
+          placeholder="Company Name"
+          value={job.company}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
           type="text"
           name="location"
           placeholder="Location"
-          className="form-control mb-3"
+          value={job.location}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
           type="number"
           name="salary"
           placeholder="Salary"
-          className="form-control mb-3"
+          value={job.salary}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
         <input
           type="text"
           name="skills"
           placeholder="Skills (React, Node, MongoDB)"
-          className="form-control mb-3"
+          value={job.skills}
           onChange={handleChange}
+          className="w-full border rounded-lg p-3"
+          required
         />
 
-        <button className="btn btn-primary">
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+        >
           Post Job
         </button>
 
       </form>
+
     </div>
   );
 }
