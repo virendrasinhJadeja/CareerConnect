@@ -64,9 +64,13 @@ const getAllJobs = async (req, res) => {
 // Get Recruiter's Jobs
 const getMyJobs = async (req, res) => {
   try {
+    console.log("Logged in Recruiter ID:", req.user.id);
+
     const jobs = await Job.find({
       recruiter: req.user.id,
     });
+
+    console.log("Jobs Found:", jobs);
 
     res.status(200).json({
       success: true,
