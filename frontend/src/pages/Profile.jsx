@@ -53,6 +53,38 @@ function Profile() {
   }
 };
 
+const [resume, setResume] = useState(null);
+
+const handleResumeUpload = async () => {
+  if (!resume) {
+    toast.error("Please select a resume");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("resume", resume);
+
+  try {
+    const res = await API.post(
+      "/student/upload-resume",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    toast.success(res.data.message);
+    fetchProfile();
+
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Resume upload failed"
+    );
+  }
+};
+
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-10">
       <h1 className="text-3xl font-bold mb-8">
@@ -102,6 +134,27 @@ function Profile() {
         >
           Update Profile
         </button>
+
+        <hr className="my-6" />
+
+<h2 className="text-xl font-bold mb-3">
+  Upload Resume
+</h2>
+
+<input
+  type="file"
+  accept=".pdf,.doc,.docx"
+  onChange={(e) => setResume(e.target.files[0])}
+  className="w-full border p-3 rounded-lg"
+/>
+
+<button
+  type="button"
+  onClick={handleResumeUpload}
+  className="w-full mt-3 bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg"
+>
+  Upload Resume
+</button>
 
       </form>
     </div>
