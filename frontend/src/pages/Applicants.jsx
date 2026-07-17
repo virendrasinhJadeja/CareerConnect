@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 function Applicants() {
 
@@ -195,6 +196,14 @@ function Applicants() {
               College
             </th>
 
+            <th className="p-3 border"> 
+              Phone 
+              </th> 
+              
+              <th className="p-3 border"> 
+                Resume 
+                </th>
+
             <th className="p-3 border">
               Status
             </th>
@@ -232,6 +241,25 @@ function Applicants() {
               <td className="border p-3">
                 {app.studentId.college}
               </td>
+
+              <td className="border p-3">
+  {app.studentId.phone}
+</td>
+
+<td className="border p-3">
+  {app.studentId.resume ? (
+    <a
+      href={app.studentId.resume}
+      target="_blank"
+      rel="noreferrer"
+      className="text-blue-600 underline"
+    >
+      View Resume
+    </a>
+  ) : (
+    "No Resume"
+  )}
+</td>
 
 
               <td className="border p-3">
