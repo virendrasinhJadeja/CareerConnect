@@ -36,13 +36,30 @@ function Profile() {
     });
   };
 
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    const res = await API.put("/auth/profile", formData);
+
+    toast.success(res.data.message);
+
+    fetchProfile();
+
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Update Failed"
+    );
+  }
+};
+
   return (
     <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-8 mt-10">
       <h1 className="text-3xl font-bold mb-8">
         My Profile
       </h1>
 
-      <div className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
 
         <input
           type="text"
@@ -80,12 +97,13 @@ function Profile() {
         />
 
         <button
+          type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg"
         >
           Update Profile
         </button>
 
-      </div>
+      </form>
     </div>
   );
 }
