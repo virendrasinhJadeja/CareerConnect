@@ -6,6 +6,7 @@ const {
   getAllJobs,
   getMyJobs,
   updateJob,
+  deleteJob,
 } = require("../controllers/jobController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -33,6 +34,14 @@ router.put(
   protect,
   authorizeRoles("recruiter"),
   updateJob
+);
+
+// Delete Job
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("recruiter"),
+  deleteJob
 );
 
 // Get All Jobs
