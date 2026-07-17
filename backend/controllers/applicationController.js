@@ -47,7 +47,7 @@ const applyJob = async (req, res) => {
 
       jobId: jobId,
 
-      recruiterId: job.recruiterId,
+      recruiterId: job.recruiter,
 
       status: "applied"
 
@@ -100,7 +100,7 @@ if (!job) {
 }
 
 // Recruiter can only view applicants for their own jobs
-if (job.recruiterId.toString() !== req.user.id) {
+if (job.recruiter.toString() !== req.user.id) {
   return res.status(403).json({
     success: false,
     message: "Access denied",
