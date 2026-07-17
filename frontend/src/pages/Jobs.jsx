@@ -18,6 +18,19 @@ function Jobs() {
     }
   };
 
+  const applyJob = async (jobId) => {
+  try {
+    const res = await API.post(`/applications/apply/${jobId}`);
+
+    toast.success(res.data.message);
+
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to apply"
+    );
+  }
+};
+
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Available Jobs</h2>
@@ -42,11 +55,11 @@ function Jobs() {
 
                   <p><strong>Status:</strong> {job.status}</p>
 
-                  <button
-                    className="btn btn-success"
-                  >
-                    Apply Now
-                  </button>
+                  <button 
+                  className="btn btn-success" 
+                  onClick={() => applyJob(job._id)}
+                 > Apply Now 
+                 </button>
 
                 </div>
               </div>
