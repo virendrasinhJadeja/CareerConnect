@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../services/api";
+import { toast } from "react-toastify";
 
 function EditJob() {
   const { id } = useParams();
@@ -55,7 +56,10 @@ function EditJob() {
       navigate("/recruiter/dashboard");
 
     } catch (error) {
-      alert(error.response?.data?.message || "Update Failed");
+       console.log("Update Error:", error.response);
+       console.log("Update Data:", error.response?.data);
+
+      toast.error(error.response?.data?.message || "Update Failed");
     }
   };
 
