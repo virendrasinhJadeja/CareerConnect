@@ -196,6 +196,10 @@ function Applicants() {
               College
             </th>
 
+            <th className="p-3 border">
+  Resume
+</th>
+
             <th className="p-3 border"> 
               Phone 
               </th> 
@@ -241,6 +245,10 @@ function Applicants() {
               <td className="border p-3">
                 {app.studentId.college}
               </td>
+
+              <td className="border p-3">
+  {app.studentId.resume}
+</td>
 
               <td className="border p-3">
   {app.studentId.phone}
