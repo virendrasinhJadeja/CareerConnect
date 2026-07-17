@@ -32,12 +32,14 @@ const authRoutes = require("./routes/authRoutes");
 const studentRoutes = require("./routes/studentRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 // Use Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Protected Route
 app.get("/api/profile", protect, (req, res) => {
