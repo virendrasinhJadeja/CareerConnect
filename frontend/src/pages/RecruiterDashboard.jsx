@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function RecruiterDashboard() {
   const [jobs, setJobs] = useState([]);
@@ -30,12 +31,17 @@ function RecruiterDashboard() {
   try {
     const res = await API.delete(`/jobs/${jobId}`);
 
+    console.log("Delete Success:", res.data);
+
     toast.success(res.data.message);
 
     fetchJobs();
 
   } catch (error) {
-    alert(error.response?.data?.message || "Delete Failed");
+    console.log("Delete Error:", error.response?.status);
+    console.log("Delete Response:", error.response?.data);
+
+    toast.error(error.response?.data?.message || "Delete Failed");
   }
 };
 
