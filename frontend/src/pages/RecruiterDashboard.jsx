@@ -6,11 +6,21 @@ import { toast } from "react-toastify";
 
 function RecruiterDashboard() {
   const [jobs, setJobs] = useState([]);
+
+  const [stats, setStats] = useState({
+  totalJobs: 0,
+  activeJobs: 0,
+  totalApplicants: 0,
+  shortlisted: 0,
+  rejected: 0,
+});
+
   const { user } = useAuth();
 
   useEffect(() => {
-    fetchJobs();
-  }, []);
+  fetchJobs();
+  fetchStats();
+}, []);
 
   const fetchJobs = async () => {
     try {
@@ -20,6 +30,17 @@ function RecruiterDashboard() {
       console.log(error);
     }
   };
+
+  const fetchStats = async () => {
+  try {
+    const res = await API.get("/jobs/dashboard-stats");
+
+    setStats(res.data);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   const deleteJob = async (jobId) => {
   const confirmDelete = window.confirm(
@@ -57,12 +78,12 @@ function RecruiterDashboard() {
 
         <div className="bg-blue-500 text-white rounded-lg p-6 shadow">
           <h3>Total Jobs</h3>
-          <p className="text-3xl font-bold">{jobs.length}</p>
+          <p className="text-3xl font-bold">{stats.totalJobs}</p>
         </div>
 
         <div className="bg-green-500 text-white rounded-lg p-6 shadow">
           <h3>Active Jobs</h3>
-          <p className="text-3xl font-bold">{activeJobs}</p>
+          <p className="text-3xl font-bold">{stats.activeJobs}</p>
         </div>
 
         <div className="bg-purple-500 text-white rounded-lg p-6 shadow">
@@ -71,6 +92,20 @@ function RecruiterDashboard() {
             {jobs.length ? jobs[0].company : "-"}
           </p>
         </div>
+
+        <div className="bg-purple-500 text-white rounded-lg p-6 shadow">
+  <h3>Total Applicants</h3>
+  <p className="text-3xl font-bold">
+    {stats.totalApplicants}
+  </p>
+</div>
+
+<div className="bg-red-500 text-white rounded-lg p-6 shadow">
+  <h3>Shortlisted</h3>
+  <p className="text-3xl font-bold">
+    {stats.shortlisted}
+  </p>
+</div>
 
         <div className="bg-orange-500 text-white rounded-lg p-6 shadow">
           <h3>Recruiter</h3>
