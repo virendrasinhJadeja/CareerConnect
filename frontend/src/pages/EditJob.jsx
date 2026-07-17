@@ -45,23 +45,26 @@ function EditJob() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await API.put(`/jobs/${id}`, formData);
+  try {
+    const res = await API.put(`/jobs/${id}`, formData);
 
-      toast.success(res.data.message);
+    console.log("SUCCESS:", res.data);
 
-      navigate("/recruiter/dashboard");
+    toast.success(res.data.message);
 
-    } catch (error) {
-       console.log("Update Error:", error.response);
-       console.log("Update Data:", error.response?.data);
+    navigate("/recruiter/dashboard");
 
-      toast.error(error.response?.data?.message || "Update Failed");
-    }
-  };
+  } catch (error) {
+    console.log("STATUS:", error.response?.status);
+    console.log("DATA:", error.response?.data);
+    console.log("FULL ERROR:", error);
+
+    toast.error(error.response?.data?.message || "Update Failed");
+  }
+};
 
   return (
     <div className="max-w-3xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-8">
