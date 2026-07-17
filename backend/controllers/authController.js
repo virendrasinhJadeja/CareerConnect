@@ -2,7 +2,9 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// ==============================
 // Register User
+// ==============================
 const registerUser = async (req, res) => {
   try {
     const {
@@ -55,7 +57,9 @@ const registerUser = async (req, res) => {
   }
 };
 
+// ==============================
 // Login User
+// ==============================
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -67,8 +71,6 @@ const loginUser = async (req, res) => {
         message: "Email and Password are required",
       });
     }
-
-   
 
     // Find user
     const user = await User.findOne({ email });
@@ -123,7 +125,9 @@ const loginUser = async (req, res) => {
   }
 };
 
- // Get Profile
+// ==============================
+// Get Profile
+// ==============================
 const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
@@ -150,7 +154,9 @@ const getProfile = async (req, res) => {
   }
 };
 
+// ==============================
 // Update Profile
+// ==============================
 const updateProfile = async (req, res) => {
   try {
     const { fullName, phone, college, company } = req.body;
@@ -171,10 +177,12 @@ const updateProfile = async (req, res) => {
 
     await user.save();
 
+    const updatedUser = await User.findById(req.user.id).select("-password");
+
     res.status(200).json({
       success: true,
       message: "Profile Updated Successfully",
-      user,
+      user: updatedUser,
     });
 
   } catch (error) {
