@@ -7,6 +7,7 @@ const {
   getMyJobs,
   updateJob,
   deleteJob,
+  getDashboardStats,
 } = require("../controllers/jobController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -26,6 +27,14 @@ router.get(
   protect,
   authorizeRoles("recruiter"),
   getMyJobs
+);
+
+// Dashboard Stats
+router.get(
+  "/dashboard-stats",
+  protect,
+  authorizeRoles("recruiter"),
+  getDashboardStats
 );
 
 // Update Job

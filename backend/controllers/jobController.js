@@ -1,4 +1,5 @@
 const Job = require("../models/Job");
+const Application = require("../models/Application");
 
 // Create New Job
 const createJob = async (req, res) => {
@@ -88,6 +89,51 @@ const getMyJobs = async (req, res) => {
   }
 };
 
+// Recruiter Dashboard Stats
+const getDashboardStats = async (req, res) => {
+  try {
+    const totalJobs = await Job.countDocuments({
+      recruiter: req.user.id,
+    });
+
+    const activeJobs = await Job.countDocuments({
+      recruiter: req.user.id,
+      status: "active",
+    });
+
+    const totalApplicants = await Application.countDocuments({
+      recruiterId: req.user.id,
+    });
+
+    const shortlisted = await Application.countDocuments({
+      recruiterId: req.user.id,
+      status: "shortlisted",
+    });
+
+    const rejected = await Application.countDocuments({
+      recruiterId: req.user.id,
+      status: "rejected",
+    });
+
+    res.status(200).json({
+      success: true,
+      totalJobs,
+      activeJobs,
+      totalApplicants,
+      shortlisted,
+      rejected,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 // Update Job
 const updateJob = async (req, res) => {
   try {
@@ -161,4 +207,5 @@ module.exports = {
   getMyJobs,
   updateJob,
   deleteJob,
+  getDashboardStats,
 };
