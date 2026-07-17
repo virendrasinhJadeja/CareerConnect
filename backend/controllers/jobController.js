@@ -62,7 +62,7 @@ const getAllJobs = async (req, res) => {
   }
 };
 
-// Get Recruiter's Jobs
+// Get myJobs
 const getMyJobs = async (req, res) => {
   try {
     console.log("Logged in Recruiter ID:", req.user.id);
@@ -88,8 +88,44 @@ const getMyJobs = async (req, res) => {
   }
 };
 
+// Update Job
+const updateJob = async (req, res) => {
+  try {
+    const job = await Job.findOne({
+      _id: req.params.id,
+      recruiter: req.user.id,
+    });
+
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    Object.assign(job, req.body);
+
+    await job.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Job Updated Successfully",
+      job,
+    });
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   createJob,
   getAllJobs,
   getMyJobs,
+  updateJob,
 };
