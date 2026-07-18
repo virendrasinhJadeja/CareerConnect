@@ -102,7 +102,6 @@ app.listen(PORT, () => {
 });
 
 
-const path = require("path");
 
 app.use(
   "/uploads",
