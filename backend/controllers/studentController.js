@@ -84,7 +84,7 @@ const updateStudentProfile = async (req, res) => {
 
 // Upload Resume
 const uploadResume = async (req, res) => {
-
+     
   try {
 
     if (!req.file) {
@@ -95,8 +95,8 @@ const uploadResume = async (req, res) => {
       });
 
     }
-
-
+     console.log(req.file);
+  
     const student = await User.findByIdAndUpdate(
       req.user.id,
       {

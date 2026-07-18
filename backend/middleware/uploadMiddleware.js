@@ -1,52 +1,16 @@
 const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("../config/cloudinary");
 const path = require("path");
 
-
-// Storage configuration
-const storage = multer.diskStorage({
-
-  destination: function (req, file, cb) {
-    cb(null, "uploads/");
-  },
-
-
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      Date.now() + path.extname(file.originalname)
-    );
-  }
-
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: async (req, file) => ({
+    folder: "careerconnect/resumes",
+    resource_type: "raw",
+    public_id: Date.now().toString(),
+    format: path.extname(file.originalname).replace(".", ""),
+  }),
 });
 
-
-// File filter
-const fileFilter = (req, file, cb) => {
-
-  const allowedTypes = [
-    ".pdf",
-    ".doc",
-    ".docx"
-  ];
-
-  const ext = path.extname(file.originalname);
-
-  if (allowedTypes.includes(ext)) {
-    cb(null, true);
-  } else {
-    cb(
-      new Error("Only PDF and DOC files are allowed"),
-      false
-    );
-  }
-
-};
-
-
-const upload = multer({
-  storage,
-  fileFilter
-});
-
-
-module.exports = upload;
+module.exports = multer({ storage });

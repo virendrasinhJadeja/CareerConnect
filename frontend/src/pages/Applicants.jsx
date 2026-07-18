@@ -196,10 +196,6 @@ function Applicants() {
               College
             </th>
 
-            <th className="p-3 border">
-  Resume
-</th>
-
             <th className="p-3 border"> 
               Phone 
               </th> 
@@ -247,23 +243,19 @@ function Applicants() {
               </td>
 
               <td className="border p-3">
-  {app.studentId.resume}
-</td>
-
-              <td className="border p-3">
   {app.studentId.phone}
 </td>
 
 <td className="border p-3">
   {app.studentId.resume ? (
     <a
-      href={`${import.meta.env.VITE_API_URL.replace("/api", "")}/${app.studentId.resume}`}
-      target="_blank"
-      rel="noreferrer"
-      className="text-blue-600 underline"
-    >
-      View Resume
-    </a>
+  href={app.studentId.resume}
+  target="_blank"
+  rel="noreferrer"
+  className="text-blue-600 underline"
+>
+  View Resume
+</a>
   ) : (
     "No Resume"
   )}
