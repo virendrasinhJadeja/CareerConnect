@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -30,6 +31,11 @@ function App() {
            path="/admin/dashboard" 
            element={<AdminDashboard />} 
            />
+
+        <Route
+          path="/admin/users"
+          element={<AdminUsers />} 
+          />
         
         {/* Protected Layout */}
         <Route
