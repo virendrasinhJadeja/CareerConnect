@@ -6,6 +6,7 @@ const { getDashboardStats } = require("../controllers/adminController");
 const { protect } = require("../middleware/authMiddleware");
 const { authorizeRoles } = require("../middleware/roleMiddleware");
 
+// Admin Dashboard Statistics
 router.get(
   "/dashboard",
   protect,

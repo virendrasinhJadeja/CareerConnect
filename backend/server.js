@@ -5,7 +5,6 @@ const connectDB = require("./config/db");
 const { protect } = require("./middleware/authMiddleware");
 const { authorizeRoles } = require("./middleware/roleMiddleware");
 
-
 // Load environment variables
 dotenv.config();
 
@@ -40,6 +39,7 @@ app.use("/api/student", studentRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/admin", adminRoutes);
+
 
 // Protected Route
 app.get("/api/profile", protect, (req, res) => {

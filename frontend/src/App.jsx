@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import AdminDashboard from "./pages/AdminDashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -25,6 +26,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
+        <Route 
+           path="/admin/dashboard" 
+           element={<AdminDashboard />} 
+           />
+        
         {/* Protected Layout */}
         <Route
           element={
@@ -33,6 +39,9 @@ function App() {
             </ProtectedRoute>
           }
         >
+
+          
+
           {/* Student Routes */}
           <Route
             path="/student/dashboard"

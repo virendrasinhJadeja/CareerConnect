@@ -20,17 +20,24 @@ function Login() {
         password,
       });
 
-      // Save user and token using AuthContext
-      login(res.data.user, res.data.token);
+console.log("Response:", res.data);
 
-      toast.success(res.data.message);
+      // Save user and token
+login(res.data.user, res.data.token);
 
-      // Redirect based on role
-      if (res.data.user.role === "student") {
-        navigate("/student/dashboard");
-      } else if (res.data.user.role === "recruiter") {
-        navigate("/recruiter/dashboard");
-      }
+console.log("Token after login:", localStorage.getItem("token"));
+console.log("User after login:", localStorage.getItem("user"));
+
+toast.success(res.data.message);
+
+// Redirect based on role
+if (res.data.user.role === "student") {
+  navigate("/student/dashboard");
+} else if (res.data.user.role === "recruiter") {
+  navigate("/recruiter/dashboard");
+} else if (res.data.user.role === "admin") {
+  navigate("/admin/dashboard");
+}
     } catch (error) {
       toast.error(error.response?.data?.message || "Login Failed");
     }
