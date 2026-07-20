@@ -20,17 +20,26 @@ function MyApplications() {
   };
 
   const getStatusColor = (status) => {
-    switch (status) {
-      case "applied":
-        return "bg-yellow-100 text-yellow-700";
-      case "shortlisted":
-        return "bg-green-100 text-green-700";
-      case "rejected":
-        return "bg-red-100 text-red-700";
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
-  };
+  switch (status) {
+    case "Applied":
+      return "bg-blue-100 text-blue-700";
+
+    case "Shortlisted":
+      return "bg-yellow-100 text-yellow-700";
+
+    case "Interview":
+      return "bg-purple-100 text-purple-700";
+
+    case "Selected":
+      return "bg-green-100 text-green-700";
+
+    case "Rejected":
+      return "bg-red-100 text-red-700";
+
+    default:
+      return "bg-gray-100 text-gray-700";
+  }
+};
 
   return (
     <div className="p-8">
@@ -53,22 +62,22 @@ function MyApplications() {
             >
               <h2 className="text-2xl font-bold text-blue-700 mb-4 flex items-center gap-2">
                 <FaBriefcase />
-                {application.jobId.title}
+                {application.jobId?.title || "Job Deleted"}
               </h2>
 
               <p className="flex items-center gap-2 mb-2">
                 <FaBuilding />
-                <strong>Company:</strong> {application.jobId.company}
+                <strong>Company:</strong> {application.jobId?.company || "-"}
               </p>
 
               <p className="flex items-center gap-2 mb-2">
                 <FaMapMarkerAlt />
-                <strong>Location:</strong> {application.jobId.location}
+                <strong>Location:</strong> {application.jobId?.location || "-"}
               </p>
 
               <p className="flex items-center gap-2 mb-2">
                 <FaMoneyBillWave />
-                <strong>Salary:</strong> ₹{application.jobId.salary}
+                <strong>Salary:</strong> ₹{application.jobId?.salary || "-"}
               </p>
 
               <p className="flex items-center gap-2 mb-4">
@@ -78,12 +87,12 @@ function MyApplications() {
               </p>
 
               <span
-                className={`px-4 py-2 rounded-full font-semibold ${getStatusColor(
-                  application.status
-                )}`}
-              >
-                {application.status.toUpperCase()}
-              </span>
+  className={`inline-block px-4 py-2 rounded-full text-sm font-bold ${getStatusColor(
+    application.status
+  )}`}
+>
+  {application.status}
+</span>
             </div>
           ))}
         </div>

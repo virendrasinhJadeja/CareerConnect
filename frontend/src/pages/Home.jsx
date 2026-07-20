@@ -1,3 +1,5 @@
+import Navbar from "../components/Navbar";
+
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -5,6 +7,8 @@ function Home() {
   return (
     <div className="min-h-screen bg-gray-100">
 
+       <Navbar />
+       
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-700 to-indigo-700 text-white">
 
@@ -26,7 +30,7 @@ function Home() {
           <div className="mt-10 flex flex-wrap justify-center gap-4">
 
             <Link
-              to="/jobs"
+              to="/login"
               className="bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg hover:bg-gray-200"
             >
               Browse Jobs

@@ -83,21 +83,21 @@ function DashboardLayout() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 p-8">
+<div className="flex-1 p-8">
 
-        <div className="bg-white rounded-lg shadow p-5 mb-6">
-          <h2 className="text-2xl font-bold">
-            Welcome, {user?.fullName}
-          </h2>
+  <div className="bg-white rounded-lg shadow p-5 mb-6">
+    <h2 className="text-2xl font-bold">
+      Welcome, {user?.fullName}
+    </h2>
 
-          <p className="text-gray-500">
-            {user?.role.toUpperCase()}
-          </p>
-        </div>
+    <p className="text-gray-500">
+      {user?.role.toUpperCase()}
+    </p>
+  </div>
 
-        <Outlet />
+  <Outlet />
 
-      </div>
+</div>
     </div>
   );
 }

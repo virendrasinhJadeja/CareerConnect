@@ -12,6 +12,14 @@ import {
 function Jobs() {
   const [jobs, setJobs] = useState([]);
 
+  const [search, setSearch] = useState("");
+const [location, setLocation] = useState("");
+const [filteredJobs, setFilteredJobs] = useState([]);
+
+const [company, setCompany] = useState("");
+const [status, setStatus] = useState("");
+const [salary, setSalary] = useState("");
+
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -20,6 +28,7 @@ function Jobs() {
     try {
       const res = await API.get("/jobs");
       setJobs(res.data.jobs);
+      setFilteredJobs(res.data.jobs);
     } catch (error) {
       toast.error("Failed to load jobs");
     }
@@ -39,13 +48,120 @@ function Jobs() {
     }
   };
 
+  const handleSearch = () => {
+  const filtered = jobs.filter((job) => {
+    const titleMatch = job.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
+
+    const locationMatch = job.location
+      .toLowerCase()
+      .includes(location.toLowerCase());
+
+    const companyMatch = job.company
+      .toLowerCase()
+      .includes(company.toLowerCase());
+
+    const statusMatch =
+      status === "" || job.status === status;
+
+    const salaryMatch =
+      salary === "" || job.salary >= Number(salary);
+
+    return (
+      titleMatch &&
+      locationMatch &&
+      companyMatch &&
+      statusMatch &&
+      salaryMatch
+    );
+  });
+
+  setFilteredJobs(filtered);
+};
+
   return (
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-8 text-gray-800">
         Available Jobs
       </h1>
 
-      {jobs.length === 0 ? (
+      <div className="bg-white shadow rounded-xl p-5 mb-8">
+
+  <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
+
+    <input
+      type="text"
+      placeholder="Search Job"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="border p-3 rounded-lg"
+    />
+
+    <input
+      type="text"
+      placeholder="Location"
+      value={location}
+      onChange={(e) => setLocation(e.target.value)}
+      className="border p-3 rounded-lg"
+    />
+
+    <input
+      type="text"
+      placeholder="Company"
+      value={company}
+      onChange={(e) => setCompany(e.target.value)}
+      className="border p-3 rounded-lg"
+    />
+
+    <select
+      value={status}
+      onChange={(e) => setStatus(e.target.value)}
+      className="border p-3 rounded-lg"
+    >
+      <option value="">All Status</option>
+      <option value="active">Active</option>
+      <option value="closed">Closed</option>
+    </select>
+
+    <input
+      type="number"
+      placeholder="Minimum Salary"
+      value={salary}
+      onChange={(e) => setSalary(e.target.value)}
+      className="border p-3 rounded-lg"
+    />
+
+    <div className="flex gap-2">
+
+      <button
+        onClick={handleSearch}
+        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
+      >
+        Search
+      </button>
+
+      <button
+        onClick={() => {
+          setSearch("");
+          setLocation("");
+          setCompany("");
+          setStatus("");
+          setSalary("");
+          setFilteredJobs(jobs);
+        }}
+        className="flex-1 bg-gray-500 hover:bg-gray-600 text-white rounded-lg"
+      >
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+      {filteredJobs.length === 0 ? (
         <div className="bg-white rounded-xl shadow p-8 text-center">
           <h3 className="text-xl font-semibold">
             No Jobs Available
@@ -53,7 +169,7 @@ function Jobs() {
         </div>
       ) : (
         <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {jobs.map((job) => (
+          {filteredJobs.map((job) => (
             <div
               key={job._id}
               className="bg-white rounded-xl shadow-lg p-6 hover:shadow-2xl transition duration-300"

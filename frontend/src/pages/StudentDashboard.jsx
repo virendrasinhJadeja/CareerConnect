@@ -24,9 +24,15 @@ function StudentDashboard() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-8">
-        Student Dashboard
-      </h1>
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 text-white shadow-lg mb-8">
+  <h1 className="text-4xl font-bold">
+    Welcome, {student.fullName} 👋
+  </h1>
+
+  <p className="mt-2 text-blue-100">
+    Welcome to CareerConnect Placement Portal
+  </p>
+</div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 
@@ -59,6 +65,22 @@ function StudentDashboard() {
         </div>
 
       </div>
+
+      <div className="grid md:grid-cols-3 gap-6 my-8">
+
+  <button className="bg-blue-600 text-white p-4 rounded-lg hover:bg-blue-700">
+    Browse Jobs
+  </button>
+
+  <button className="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700">
+    Update Profile
+  </button>
+
+  <button className="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700">
+    My Applications
+  </button>
+
+</div>
 
       <div className="bg-white rounded-lg shadow mt-8 p-6">
         <h2 className="text-2xl font-bold mb-4">

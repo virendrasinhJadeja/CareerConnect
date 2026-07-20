@@ -49,7 +49,7 @@ const applyJob = async (req, res) => {
 
       recruiterId: job.recruiter,
 
-      status: "applied"
+      status: "Applied"
 
     });
 
@@ -146,67 +146,46 @@ if (job.recruiter.toString() !== req.user.id) {
 
 // Update Application Status
 const updateApplicationStatus = async (req, res) => {
-
   try {
-
     const applicationId = req.params.applicationId;
-
     const { status } = req.body;
 
-
-    const application = await Application.findByIdAndUpdate(
-
-      applicationId,
-
-      {
-        status: status
-      },
-
-      {
-        new: true
-      }
-
-    );
-
+    // Find Application
+    const application = await Application.findById(applicationId);
 
     if (!application) {
-
       return res.status(404).json({
-
         success: false,
-        message: "Application not found"
-
+        message: "Application not found",
       });
-
     }
 
+    // Only the recruiter who owns the job can update status
+    if (application.recruiterId.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied",
+      });
+    }
+
+    // Update Status
+    application.status = status;
+    await application.save();
 
     res.status(200).json({
-
       success: true,
-
       message: "Application status updated successfully",
-
-      application
-
+      application,
     });
-
 
   } catch (error) {
-
     console.log(error);
 
-
     res.status(500).json({
-
       success: false,
-
-      message: "Server Error"
-
+      message: "Server Error",
     });
-
   }
-
 };
 
 // Get My Applications

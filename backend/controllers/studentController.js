@@ -128,10 +128,47 @@ const uploadResume = async (req, res) => {
 
 };
 
+// Upload Profile Photo
+const uploadProfilePhoto = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Please upload a profile photo",
+      });
+    }
+
+    const student = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        profilePhoto: req.file.path,
+      },
+      {
+        new: true,
+      }
+    ).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Profile photo uploaded successfully",
+      student,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 
 
 module.exports = {
   getStudentProfile,
   updateStudentProfile,
   uploadResume,
+  uploadProfilePhoto,
 };

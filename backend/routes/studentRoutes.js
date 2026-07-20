@@ -5,6 +5,7 @@ const {
   getStudentProfile,
   updateStudentProfile,
   uploadResume,
+  uploadProfilePhoto,
 } = require("../controllers/studentController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -34,6 +35,14 @@ router.post(
   authorizeRoles("student"),
   upload.single("resume"),
   uploadResume
+);
+
+router.post(
+  "/upload-photo",
+  protect,
+  authorizeRoles("student"),
+  upload.single("profilePhoto"),
+  uploadProfilePhoto
 );
 
 module.exports = router;

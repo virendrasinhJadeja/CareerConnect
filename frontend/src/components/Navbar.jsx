@@ -1,52 +1,49 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
-
   return (
-    <nav className="bg-blue-600 text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">
+    <nav className="bg-white shadow-md sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-3xl font-bold text-blue-600"
+        >
           CareerConnect
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link to="/">Home</Link>
-          <Link to="/jobs">Jobs</Link>
+        {/* Menu */}
+        <div className="flex gap-8 items-center">
 
-          {user ? (
-            <>
-              <span className="font-semibold">
-                Welcome, {user.fullName}
-              </span>
+          <a href="#features" className="hover:text-blue-600">
+            Features
+          </a>
 
-              {user.role === "student" ? (
-                <Link to="/student/dashboard">Dashboard</Link>
-              ) : (
-                <Link to="/recruiter/dashboard">Dashboard</Link>
-              )}
+          <a href="#companies" className="hover:text-blue-600">
+            Companies
+          </a>
 
-              <button
-                onClick={handleLogout}
-                className="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </>
-          )}
+          <a href="#contact" className="hover:text-blue-600">
+            Contact
+          </a>
+
+          <Link
+            to="/login"
+            className="px-5 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition"
+          >
+            Login
+          </Link>
+
+          <Link
+            to="/register"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg transition"
+          >
+            Register
+          </Link>
+
         </div>
+
       </div>
     </nav>
   );

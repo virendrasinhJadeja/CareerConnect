@@ -264,11 +264,22 @@ function Applicants() {
 
               <td className="border p-3">
 
-                <span className="bg-blue-100 px-3 py-1 rounded">
-
-                  {app.status}
-
-                </span>
+                <span
+  className={`px-3 py-1 rounded text-white font-semibold
+    ${
+      app.status === "Applied"
+        ? "bg-blue-500"
+        : app.status === "Shortlisted"
+        ? "bg-yellow-500"
+        : app.status === "Interview"
+        ? "bg-purple-500"
+        : app.status === "Selected"
+        ? "bg-green-600"
+        : "bg-red-500"
+    }`}
+>
+  {app.status}
+</span>
 
               </td>
 
@@ -276,39 +287,17 @@ function Applicants() {
               <td className="border p-3 space-x-2">
 
 
-                <button
-
-                onClick={()=>
-                  updateStatus(
-                    app._id,
-                    "shortlisted"
-                  )
-                }
-
-                className="bg-green-600 text-white px-3 py-1 rounded"
-                >
-
-                  Shortlist
-
-                </button>
-
-
-
-                <button
-
-                onClick={()=>
-                  updateStatus(
-                    app._id,
-                    "rejected"
-                  )
-                }
-
-                className="bg-red-600 text-white px-3 py-1 rounded"
-                >
-
-                  Reject
-
-                </button>
+                <select
+  value={app.status}
+  onChange={(e) => updateStatus(app._id, e.target.value)}
+  className="border border-gray-300 rounded-lg px-3 py-2 w-full"
+>
+  <option value="Applied">Applied</option>
+  <option value="Shortlisted">Shortlisted</option>
+  <option value="Interview">Interview</option>
+  <option value="Selected">Selected</option>
+  <option value="Rejected">Rejected</option>
+</select>
 
 
               </td>
