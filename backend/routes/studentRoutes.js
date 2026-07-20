@@ -40,7 +40,7 @@ router.post(
 router.post(
   "/upload-photo",
   protect,
-  authorizeRoles("student"),
+  authorizeRoles("student", "recruiter"),
   upload.single("profilePhoto"),
   uploadProfilePhoto
 );

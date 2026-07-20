@@ -49,6 +49,13 @@ function DashboardLayout() {
 
           {user?.role === "recruiter" && (
             <>
+
+            <Link
+  to="/recruiter/profile"
+  className="block hover:bg-blue-600 p-3 rounded"
+>
+  Profile
+</Link>
               <Link
                 to="/recruiter/dashboard"
                 className="block hover:bg-blue-600 p-3 rounded"

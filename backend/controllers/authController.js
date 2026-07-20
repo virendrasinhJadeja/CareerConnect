@@ -159,8 +159,6 @@ const getProfile = async (req, res) => {
 // ==============================
 const updateProfile = async (req, res) => {
   try {
-    const { fullName, phone, college, company } = req.body;
-
     const user = await User.findById(req.user.id);
 
     if (!user) {
@@ -170,23 +168,29 @@ const updateProfile = async (req, res) => {
       });
     }
 
-    user.fullName = fullName || user.fullName;
-    user.phone = phone || user.phone;
-    user.college = college || user.college;
-    user.company = company || user.company;
+    user.fullName = req.body.fullName || user.fullName;
+    user.phone = req.body.phone || user.phone;
+
+    // Recruiter Only
+    if (user.role === "recruiter") {
+      user.company = req.body.company || user.company;
+    }
+
+    // Student Only
+    if (user.role === "student") {
+      user.college = req.body.college || user.college;
+    }
 
     await user.save();
 
-    const updatedUser = await User.findById(req.user.id).select("-password");
-
     res.status(200).json({
       success: true,
-      message: "Profile Updated Successfully",
-      user: updatedUser,
+      message: "Profile updated successfully",
+      user,
     });
 
   } catch (error) {
-    console.error(error);
+    console.log(error);
 
     res.status(500).json({
       success: false,

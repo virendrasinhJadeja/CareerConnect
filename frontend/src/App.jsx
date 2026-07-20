@@ -13,6 +13,7 @@ import MyApplications from "./pages/MyApplications";
 import Profile from "./pages/Profile";
 
 // Recruiter
+import RecruiterProfile from "./pages/RecruiterProfile";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import PostJob from "./pages/PostJob";
 import Applicants from "./pages/Applicants";
@@ -84,6 +85,16 @@ function App() {
   />
 
   {/* Recruiter */}
+
+  <Route
+  path="/recruiter/profile"
+  element={
+    <ProtectedRoute role="recruiter">
+      <RecruiterProfile />
+    </ProtectedRoute>
+  }
+/>
+  
 
   <Route
     path="/recruiter/dashboard"
